@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Anji Home Foods — Mother of Taste</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F1E6C6;
+    --paper: #FBF6E9;
+    --forest: #1F4D2C;
+    --forest-deep: #123319;
+    --maroon: #7A2230;
+    --maroon-deep: #5B1A24;
+    --turmeric: #B7791F;
+    --turmeric-deep: #8C5C15;
+    --ink: #2B2620;
+    --ink-soft: #6B6152;
+    --line: #DCCFA4;
+    --wa-green: #25D366;
+
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+  * { box-sizing: inherit; }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --cream: #201A12;
+      --paper: #2A2318;
+      --ink: #F1E6C6;
+      --ink-soft: #C9BB9A;
+      --line: #4A3F2A;
+    }
+  }
+  :root[data-theme="dark"] {
+    --cream: #201A12;
+    --paper: #2A2318;
+    --ink: #F1E6C6;
+    --ink-soft: #C9BB9A;
+    --line: #4A3F2A;
+  }
+
+  html, body {
+    margin: 0;
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Work Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a { color: inherit; }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+
+  /* ---------- Header ---------- */
+  header.top {
+    background: var(--forest);
+    color: #F4EFDD;
+    padding: 14px 0;
+  }
+  .top-row {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 12px; flex-wrap: wrap;
+  }
+  .brand {
+    display: flex; align-items: baseline; gap: 10px;
+    font-family: 'Fraunces', serif;
+  }
+  .brand-name { font-size: 24px; font-weight: 700; letter-spacing: 0.2px; }
+  .brand-tag { font-size: 13px; color: #CFE0D2; font-style: italic; margin-left: 8px; }
+  .ship-note {
+    font-size: 13px; color: #CFE0D2;
+  }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    padding: 56px 0 40px;
+    text-align: center;
+  }
+  .hero h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: clamp(30px, 4.2vw, 46px);
+    line-height: 1.15;
+    margin: 0 0 14px;
+    color: var(--forest);
+  }
+  :root[data-theme="dark"] .hero h1 { color: #8FCB9C; }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .hero h1 { color: #8FCB9C; }
+  }
+  .hero p {
+    max-width: 560px; margin: 0 auto;
+    color: var(--ink-soft);
+    font-size: 16px; line-height: 1.6;
+  }
+  .hero .leafline {
+    margin: 22px auto 0; height: 1px; width: 64px;
+    background: var(--turmeric);
+    border: none;
+  }
+
+  /* ---------- Category tabs ---------- */
+  .tabs {
+    display: flex; justify-content: center; gap: 10px;
+    flex-wrap: wrap;
+    margin: 8px 0 36px;
+  }
+  .tab {
+    font-family: 'Work Sans', sans-serif;
+    font-weight: 600; font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 999px;
+    border: 1.5px solid var(--line);
+    background: var(--paper);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .tab[data-cat="veg"].active { background: var(--forest); border-color: var(--forest); color: #fff; }
+  .tab[data-cat="nonveg"].active { background: var(--maroon); border-color: var(--maroon); color: #fff; }
+  .tab[data-cat="podi"].active { background: var(--turmeric); border-color: var(--turmeric); color: #fff; }
+
+  /* ---------- Product grid ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 18px;
+    padding-bottom: 110px;
+  }
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+    border-top-width: 4px;
+  }
+  .card[data-cat="veg"] { border-top-color: var(--forest); }
+  .card[data-cat="nonveg"] { border-top-color: var(--maroon); }
+  .card[data-cat="podi"] { border-top-color: var(--turmeric); }
+
+  .card-media {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .card-media.cat-veg { background: #EAF1E7; }
+  .card-media.cat-nonveg { background: #F3E2DF; }
+  .card-media.cat-podi { background: #F7ECD9; }
+  .card-media svg.illustration { width: 60%; height: auto; }
+
+  .select-toggle { position: absolute; top: 10px; right: 10px; width: 30px; height: 30px; }
+  .select-toggle input {
+    position: absolute; inset: 0; opacity: 0; margin: 0; cursor: pointer; width: 100%; height: 100%;
+  }
+  .check-circle {
+    position: absolute; inset: 0;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.88);
+    border: 1.5px solid var(--line);
+    display: flex; align-items: center; justify-content: center;
+    pointer-events: none;
+    transition: background .15s ease, border-color .15s ease;
+  }
+  .check-circle svg { width: 16px; height: 16px; color: #fff; opacity: 0; transition: opacity .15s ease; }
+  .select-toggle input:checked + .check-circle { background: var(--forest); border-color: var(--forest); }
+  .select-toggle input:checked + .check-circle svg { opacity: 1; }
+
+  .card-body {
+    padding: 14px 18px 16px;
+    display: flex; flex-direction: column;
+    flex: 1;
+  }
+  .card-body h3 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0 0 10px;
+    color: var(--ink);
+  }
+  .price-row {
+    display: flex; justify-content: space-between;
+    font-size: 14px; color: var(--ink-soft);
+    padding: 5px 0;
+    border-bottom: 1px dashed var(--line);
+  }
+  .price-row:last-of-type { border-bottom: none; margin-bottom: 14px; }
+  .price-row span:last-child { font-weight: 600; color: var(--ink); }
+
+  .enquire-btn {
+    margin-top: auto;
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--wa-green);
+    color: #08351A;
+    font-weight: 600; font-size: 14px;
+    text-decoration: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    transition: filter .15s ease;
+  }
+  .enquire-btn:hover { filter: brightness(0.95); }
+  .enquire-btn svg { width: 16px; height: 16px; flex: none; }
+
+  /* ---------- Floating multi-select bar ---------- */
+  .floating-bar {
+    position: fixed;
+    left: 50%; bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    transform: translate(-50%, 160%);
+    background: var(--forest-deep);
+    color: #F4EFDD;
+    padding: 12px 14px 12px 18px;
+    border-radius: 14px;
+    display: flex; align-items: center; gap: 14px;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.28);
+    transition: transform .25s ease;
+    z-index: 20;
+    max-width: calc(100% - 32px);
+  }
+  .floating-bar.show { transform: translate(-50%, 0); }
+  .floating-bar .count { font-size: 14px; font-weight: 600; white-space: nowrap; }
+  .floating-bar .clear-btn {
+    background: transparent; border: 1px solid rgba(244,239,221,0.4);
+    color: inherit; border-radius: 8px; padding: 8px 12px;
+    font-size: 13px; font-family: inherit; cursor: pointer;
+  }
+  .floating-bar .bar-enquire {
+    background: var(--wa-green); color: #08351A;
+    font-weight: 700; font-size: 14px;
+    padding: 10px 16px; border-radius: 10px;
+    text-decoration: none; white-space: nowrap;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .floating-bar .bar-enquire svg { width: 16px; height: 16px; flex: none; }
+
+  /* ---------- Sticky WhatsApp catalogue banner ---------- */
+  .cat-banner {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .cat-banner p { margin: 0; font-size: 14px; color: var(--ink-soft); max-width: 480px; line-height: 1.5; }
+  .cat-banner strong { color: var(--ink); }
+  .cat-link {
+    background: var(--forest); color: #fff; text-decoration: none;
+    padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 14px;
+    white-space: nowrap;
+  }
+
+  /* ---------- Footer ---------- */
+  footer {
+    background: var(--forest-deep);
+    color: #CFE0D2;
+    padding: 28px 0;
+    font-size: 13px;
+  }
+  footer .wrap { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+  footer a { color: #F4EFDD; text-decoration: underline; }
+
+  .demo-flag {
+    position: sticky; top: 0; z-index: 10;
+    background: #3A2E12; color: #F6E7B0;
+    text-align: center; font-size: 12.5px;
+    padding: 7px 12px;
+    padding-top: calc(7px + env(safe-area-inset-top, 0px));
+  }
+
+  @media (max-width: 480px) {
+    .top-row { justify-content: center; text-align: center; }
+    .cat-banner { flex-direction: column; text-align: center; }
+    .floating-bar { flex-wrap: wrap; justify-content: center; padding: 12px 16px; }
+    .floating-bar .count { width: 100%; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="demo-flag">Demo preview for Anji Home Foods — sample layout, not the final live site</div>
+
+<header class="top">
+  <div class="wrap top-row">
+    <div class="brand">
+      <span class="brand-name">Anji Home Foods</span>
+      <span class="brand-tag">Mother of Taste</span>
+    </div>
+    <div class="ship-note">Shipping across India &amp; worldwide · Orders via WhatsApp</div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap">
+    <h1>Traditional recipes,<br>homemade with love</h1>
+    <p>Pure, natural pickles and spice podulu made the way home kitchens have always made them — now a message away, wherever you live.</p>
+    <hr class="leafline">
+  </div>
+</section>
+
+<div class="wrap">
+
+  <div class="cat-banner">
+    <p><strong>Prefer to browse on WhatsApp?</strong> The full catalogue with photos and prices is also available directly inside WhatsApp Business.</p>
+    <a class="cat-link" href="https://wa.me/919381748593?text=Hi!%20Could%20you%20share%20your%20product%20catalogue%3F" target="_blank" rel="noopener">Open WhatsApp Catalogue</a>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-cat="veg">Veg Pickles</button>
+    <button class="tab" data-cat="nonveg">Non-Veg Pickles</button>
+    <button class="tab" data-cat="podi">Podulu</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>Packing &amp; delivery charges extra</span>
+    <span>WhatsApp Orders: <a href="https://wa.me/919381748593" target="_blank" rel="noopener">93817 48593</a></span>
+  </div>
+</footer>
+
+<div class="floating-bar" id="floatBar">
+  <span class="count" id="floatCount">0 items selected</span>
+  <button type="button" class="clear-btn" id="floatClear">Clear</button>
+  <a class="bar-enquire" id="floatEnquire" href="#" target="_blank" rel="noopener"></a>
+</div>
+
+<script>
+  const WA_NUMBER = "919381748593";
+
+  const products = {
+    veg: [
+      ["Sweet Mango", 100, 200], ["Hot Mango", 100, 200], ["Thokkudu Magai", 100, 200],
+      ["Tomato", 100, 200], ["Lemon", 100, 200], ["Sweet Lemon", 100, 200],
+      ["Sweet Dhabbakaya", 100, 200], ["Allam", 100, 200], ["Gongura", 100, 200],
+      ["Kothimeera", 100, 200], ["Karivepaku", 100, 200], ["Mixed Veg", 100, 200],
+      ["Pandumirchi", 100, 200],
+    ],
+    nonveg: [
+      ["Chicken Bone", 400, 800], ["Chicken Boneless", 500, 1000],
+      ["Prawns", 600, 1200], ["Mutton", 900, 1800],
+    ],
+    podi: [
+      ["Idly Karam Podi", 150, 300], ["Kandi Podi", 200, 400], ["Munagaku Podi", 200, 400],
+      ["Karivepaku Podi", 200, 400], ["Kakarakaya Podi", 200, 400], ["Pudina Podi", 200, 400],
+      ["Kothimeera Podi", 200, 400], ["Menthiaaku Podi", 200, 400], ["Patnala Podi", 200, 400],
+    ],
+  };
+
+  function waLink(name, p500, p1kg) {
+    const text = `Hi! I'd like to enquire about ${name} (500g ₹${p500} / 1kg ₹${p1kg}) from Anji Home Foods.`;
+    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+  }
+
+  const waIcon = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.29-1.39a9.9 9.9 0 0 0 4.7 1.2h.01c5.46 0 9.91-4.45 9.91-9.9 0-2.65-1.03-5.14-2.9-7.01A9.87 9.87 0 0 0 12.04 2m0 1.67a8.2 8.2 0 0 1 8.23 8.24c0 4.54-3.7 8.23-8.24 8.23a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.84-3.04-.2-.31a8.18 8.18 0 0 1-1.26-4.38c0-4.54 3.7-8.23 8.24-8.23m-4.7 4.3c-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.04 0 1.2.88 2.36 1 2.53.13.16 1.72 2.7 4.24 3.68 2.1.82 2.52.66 2.98.62.46-.05 1.48-.6 1.68-1.19.2-.58.2-1.08.14-1.19-.06-.1-.23-.16-.48-.28-.25-.13-1.48-.73-1.71-.81-.23-.08-.4-.13-.56.13-.17.25-.65.81-.79.98-.15.16-.29.18-.54.06-.25-.13-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.39-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.44.12-.14.16-.25.24-.41.08-.16.04-.31-.02-.44-.06-.13-.56-1.37-.78-1.87-.2-.48-.41-.42-.56-.43z"/></svg>`;
+  const checkIcon = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="4,12 9,17 20,6"></polyline></svg>`;
+
+  // ---- Placeholder product illustrations (inline SVG, no external images) ----
+  const OUTLINE = "#2B2620", GLASS = "#FBF6E9";
+
+  function jarSVG(color, dark) {
+    return `<svg class="illustration" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <rect x="42" y="9" width="36" height="13" rx="4" fill="${OUTLINE}"/>
+      <rect x="46" y="21" width="28" height="10" fill="${GLASS}" stroke="${OUTLINE}" stroke-width="2.5"/>
+      <rect x="21" y="29" width="78" height="80" rx="16" fill="${GLASS}" stroke="${OUTLINE}" stroke-width="3"/>
+      <rect x="28" y="51" width="64" height="52" rx="10" fill="${color}"/>
+      <ellipse cx="45" cy="65" rx="8" ry="5" fill="${dark}" opacity="0.55"/>
+      <ellipse cx="71" cy="78" rx="10" ry="6" fill="${dark}" opacity="0.5"/>
+      <ellipse cx="52" cy="93" rx="7" ry="4" fill="${dark}" opacity="0.5"/>
+      <rect x="26" y="34" width="7" height="68" rx="3.5" fill="#FFFFFF" opacity="0.22"/>
+    </svg>`;
+  }
+
+  function bowlSVG(color, dark) {
+    return `<svg class="illustration" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13,42 C13,84 107,84 107,42 L107,48 C107,90 13,90 13,48 Z" fill="${GLASS}" stroke="${OUTLINE}" stroke-width="3"/>
+      <ellipse cx="60" cy="42" rx="47" ry="13" fill="${GLASS}" stroke="${OUTLINE}" stroke-width="2.5"/>
+      <ellipse cx="60" cy="42" rx="40" ry="10" fill="${color}"/>
+      <circle cx="46" cy="40" r="2.4" fill="${dark}" opacity="0.6"/>
+      <circle cx="67" cy="43" r="2" fill="${dark}" opacity="0.6"/>
+      <circle cx="56" cy="37" r="1.6" fill="${dark}" opacity="0.6"/>
+      <circle cx="75" cy="39" r="1.8" fill="${dark}" opacity="0.6"/>
+      <circle cx="38" cy="43" r="1.6" fill="${dark}" opacity="0.5"/>
+    </svg>`;
+  }
+
+  function colorsFor(name, cat) {
+    const n = name.toLowerCase();
+    if (cat === 'nonveg') {
+      if (n.indexOf('mutton') !== -1) return ['#7A2230', '#4E1620'];
+      if (n.indexOf('prawn') !== -1) return ['#C97B6D', '#93564A'];
+      return ['#A63A2E', '#7C2B22']; // chicken variants
+    }
+    if (cat === 'podi') {
+      if (n.indexOf('idly') !== -1 || n.indexOf('karam') !== -1) return ['#8F2E1E', '#5E1F14'];
+      if (n.indexOf('kandi') !== -1 || n.indexOf('patnala') !== -1) return ['#C08A2E', '#8C6420'];
+      if (n.indexOf('kakarakaya') !== -1) return ['#7C7A3D', '#57552A'];
+      return ['#6E7F3A', '#4C5828'];
+    }
+    // veg
+    if (n.indexOf('mango') !== -1 || n.indexOf('lemon') !== -1) return ['#E8B23D', '#B9862A'];
+    if (n.indexOf('tomato') !== -1 || n.indexOf('mirchi') !== -1 || n.indexOf('hot') !== -1) return ['#C1432B', '#8F2E1C'];
+    if (n.indexOf('gongura') !== -1 || n.indexOf('kothimeera') !== -1 || n.indexOf('karivepaku') !== -1 || n.indexOf('allam') !== -1) return ['#6B8E3D', '#4C6629'];
+    return ['#A85C2E', '#764019'];
+  }
+
+  // ---- Multi-select state (persists across tab switches) ----
+  const selectedMap = new Map(); // key -> {name, p500, p1kg}
+
+  function buildMultiWaLink() {
+    const lines = ["Hi! I'd like to enquire about the following items from Anji Home Foods:"];
+    selectedMap.forEach(function(p) {
+      lines.push('• ' + p.name + ' — 500g ₹' + p.p500 + ' / 1kg ₹' + p.p1kg);
+    });
+    const text = lines.join('\n');
+    return `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+  }
+
+  function updateFloatingBar() {
+    const count = selectedMap.size;
+    const bar = document.getElementById('floatBar');
+    document.getElementById('floatCount').textContent = count + (count === 1 ? ' item selected' : ' items selected');
+    bar.classList.toggle('show', count > 0);
+    const enquireLink = document.getElementById('floatEnquire');
+    enquireLink.href = buildMultiWaLink();
+    enquireLink.innerHTML = waIcon + ' Enquire Selected';
+  }
+
+  function render(cat) {
+    const grid = document.getElementById('grid');
+    grid.innerHTML = '';
+    products[cat].forEach(function(item) {
+      const name = item[0], p500 = item[1], p1kg = item[2];
+      const key = cat + '|' + name;
+      const colors = colorsFor(name, cat);
+      const media = cat === 'podi' ? bowlSVG(colors[0], colors[1]) : jarSVG(colors[0], colors[1]);
+      const isChecked = selectedMap.has(key) ? 'checked' : '';
+
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.dataset.cat = cat;
+      card.innerHTML = `
+        <div class="card-media cat-${cat}">
+          ${media}
+          <label class="select-toggle">
+            <input type="checkbox" ${isChecked}>
+            <span class="check-circle">${checkIcon}</span>
+          </label>
+        </div>
+        <div class="card-body">
+          <h3>${name}</h3>
+          <div class="price-row"><span>500g</span><span>₹${p500}/-</span></div>
+          <div class="price-row"><span>1kg</span><span>₹${p1kg}/-</span></div>
+          <a class="enquire-btn" href="${waLink(name, p500, p1kg)}" target="_blank" rel="noopener">
+            ${waIcon} Enquire on WhatsApp
+          </a>
+        </div>
+      `;
+      const checkbox = card.querySelector('input[type="checkbox"]');
+      checkbox.addEventListener('change', function() {
+        if (checkbox.checked) {
+          selectedMap.set(key, { name: name, p500: p500, p1kg: p1kg });
+        } else {
+          selectedMap.delete(key);
+        }
+        updateFloatingBar();
+      });
+      grid.appendChild(card);
+    });
+  }
+
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      render(tab.dataset.cat);
+    });
+  });
+
+  document.getElementById('floatClear').addEventListener('click', function() {
+    selectedMap.clear();
+    document.querySelectorAll('.select-toggle input[type="checkbox"]').forEach(function(cb) { cb.checked = false; });
+    updateFloatingBar();
+  });
+
+  render('veg');
+  updateFloatingBar();
+</script>
+
+</body>
+</html>
